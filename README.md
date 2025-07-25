@@ -1,16 +1,5 @@
 # blutooth
 
-A new Flutter project.
+Kindly Check on Physical Device
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Facing issue on showing the device name, since the plugin doesn't give the device name. I'm working on it and will push the code once it fixed.
