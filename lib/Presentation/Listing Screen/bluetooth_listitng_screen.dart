@@ -17,12 +17,30 @@ class BluetoothListitngScreen extends StatelessWidget {
       );
     });
     return Scaffold(
-      appBar: AppBar(title: const Text('Bluetooth Devices')),
+      appBar: AppBar(
+        title: const Text('Bluetooth Devices'),
+        actions: [
+          IconButton(
+            onPressed: () => context.read<bluetooth_bloc.BluetoothBloc>().add(
+              bluetooth_bloc.BluetoothEvent.startScanning(),
+            ),
+            icon: Icon(Icons.refresh),
+          ),
+        ],
+      ),
       body:
-          BlocBuilder<
+          BlocConsumer<
             bluetooth_bloc.BluetoothBloc,
             bluetooth_bloc.BluetoothState
           >(
+            listener: (context, state) {
+              if (state.error != null) {
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text(state.error!)));
+              }
+            },
+
             builder: (context, state) {
               if (state.isScanning) {
                 return const Center(child: CircularProgressIndicator());
@@ -48,13 +66,6 @@ class BluetoothListitngScreen extends StatelessWidget {
                           Text(
                             device.isConnected ? 'Connected' : 'Disconnected',
                           ),
-                          Text(device.advName.toString().split('.').last),
-                          StreamBuilder(
-                            stream: device.mtu,
-                            builder: (ctx, snapshit) =>
-                                Text('MTU: ${snapshit.data ?? 'Unknown'}'),
-                          ),
-                          Text(device.advName),
                         ],
                       ),
                       leading: const Icon(Icons.bluetooth),

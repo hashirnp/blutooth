@@ -15,41 +15,39 @@ class BluetoothBloc extends Bloc<BluetoothEvent, BluetoothState> {
   MyBlutoothService service;
   BluetoothBloc(this.service) : super(BluetoothState.initial()) {
     on<_StartScanning>((event, emit) async {
-      emit(state.copyWith(isScanning: true));
+      emit(state.copyWith(isScanning: true, error: null));
       final devices = await service.startScanning();
       emit(state.copyWith(devices: devices, isScanning: false));
     });
 
     on<_ConncetDevice>((event, emit) async {
-     
-      emit(state.copyWith(isScanning: true));
+      emit(state.copyWith(isScanning: true, error: null));
 
       final result = await service.connectDevice(event.devices);
-      if (result) {
-        emit(
-          state.copyWith(
-            connectedDevices: FlutterBluePlus.connectedDevices,
-            isScanning: false,
-          ),
-        );
-      }
+
+      emit(
+        state.copyWith(
+          connectedDevices: FlutterBluePlus.connectedDevices,
+          isScanning: false,
+          error: result ? null : 'Failed to connect',
+        ),
+      );
+
       print('Connecting to device: ${event.devices.remoteId}');
     });
 
     on<_DisConncetDevice>((event, emit) async {
-      // Handle device connection logic here
-      // For now, just log the device
-      emit(state.copyWith(isScanning: true));
-
+      emit(state.copyWith(isScanning: true, error: null));
       final result = await service.disconnectDevice(event.devices);
-      if (result) {
-        emit(
-          state.copyWith(
-            connectedDevices: FlutterBluePlus.connectedDevices,
-            isScanning: false,
-          ),
-        );
-      }
+
+      emit(
+        state.copyWith(
+          connectedDevices: FlutterBluePlus.connectedDevices,
+          isScanning: false,
+          error: result ? null : 'Failed to disconnect',
+        ),
+      );
+
       if (kDebugMode) {
         print('Disconnecting to device: ${event.devices.remoteId}');
       }

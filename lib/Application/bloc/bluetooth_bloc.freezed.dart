@@ -374,7 +374,7 @@ as BluetoothDevice,
 /// @nodoc
 mixin _$BluetoothState implements DiagnosticableTreeMixin {
 
- List<DiscoveredDevice> get devices; List<BluetoothDevice> get connectedDevices; bool get isScanning;
+ List<DiscoveredDevice> get devices; List<BluetoothDevice> get connectedDevices; bool get isScanning; String? get error;
 /// Create a copy of BluetoothState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -386,21 +386,21 @@ $BluetoothStateCopyWith<BluetoothState> get copyWith => _$BluetoothStateCopyWith
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'BluetoothState'))
-    ..add(DiagnosticsProperty('devices', devices))..add(DiagnosticsProperty('connectedDevices', connectedDevices))..add(DiagnosticsProperty('isScanning', isScanning));
+    ..add(DiagnosticsProperty('devices', devices))..add(DiagnosticsProperty('connectedDevices', connectedDevices))..add(DiagnosticsProperty('isScanning', isScanning))..add(DiagnosticsProperty('error', error));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is BluetoothState&&const DeepCollectionEquality().equals(other.devices, devices)&&const DeepCollectionEquality().equals(other.connectedDevices, connectedDevices)&&(identical(other.isScanning, isScanning) || other.isScanning == isScanning));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is BluetoothState&&const DeepCollectionEquality().equals(other.devices, devices)&&const DeepCollectionEquality().equals(other.connectedDevices, connectedDevices)&&(identical(other.isScanning, isScanning) || other.isScanning == isScanning)&&(identical(other.error, error) || other.error == error));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(devices),const DeepCollectionEquality().hash(connectedDevices),isScanning);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(devices),const DeepCollectionEquality().hash(connectedDevices),isScanning,error);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'BluetoothState(devices: $devices, connectedDevices: $connectedDevices, isScanning: $isScanning)';
+  return 'BluetoothState(devices: $devices, connectedDevices: $connectedDevices, isScanning: $isScanning, error: $error)';
 }
 
 
@@ -411,7 +411,7 @@ abstract mixin class $BluetoothStateCopyWith<$Res>  {
   factory $BluetoothStateCopyWith(BluetoothState value, $Res Function(BluetoothState) _then) = _$BluetoothStateCopyWithImpl;
 @useResult
 $Res call({
- List<DiscoveredDevice> devices, List<BluetoothDevice> connectedDevices, bool isScanning
+ List<DiscoveredDevice> devices, List<BluetoothDevice> connectedDevices, bool isScanning, String? error
 });
 
 
@@ -428,12 +428,13 @@ class _$BluetoothStateCopyWithImpl<$Res>
 
 /// Create a copy of BluetoothState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? devices = null,Object? connectedDevices = null,Object? isScanning = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? devices = null,Object? connectedDevices = null,Object? isScanning = null,Object? error = freezed,}) {
   return _then(_self.copyWith(
 devices: null == devices ? _self.devices : devices // ignore: cast_nullable_to_non_nullable
 as List<DiscoveredDevice>,connectedDevices: null == connectedDevices ? _self.connectedDevices : connectedDevices // ignore: cast_nullable_to_non_nullable
 as List<BluetoothDevice>,isScanning: null == isScanning ? _self.isScanning : isScanning // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -518,10 +519,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<DiscoveredDevice> devices,  List<BluetoothDevice> connectedDevices,  bool isScanning)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<DiscoveredDevice> devices,  List<BluetoothDevice> connectedDevices,  bool isScanning,  String? error)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _BluetoothState() when $default != null:
-return $default(_that.devices,_that.connectedDevices,_that.isScanning);case _:
+return $default(_that.devices,_that.connectedDevices,_that.isScanning,_that.error);case _:
   return orElse();
 
 }
@@ -539,10 +540,10 @@ return $default(_that.devices,_that.connectedDevices,_that.isScanning);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<DiscoveredDevice> devices,  List<BluetoothDevice> connectedDevices,  bool isScanning)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<DiscoveredDevice> devices,  List<BluetoothDevice> connectedDevices,  bool isScanning,  String? error)  $default,) {final _that = this;
 switch (_that) {
 case _BluetoothState():
-return $default(_that.devices,_that.connectedDevices,_that.isScanning);case _:
+return $default(_that.devices,_that.connectedDevices,_that.isScanning,_that.error);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -559,10 +560,10 @@ return $default(_that.devices,_that.connectedDevices,_that.isScanning);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<DiscoveredDevice> devices,  List<BluetoothDevice> connectedDevices,  bool isScanning)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<DiscoveredDevice> devices,  List<BluetoothDevice> connectedDevices,  bool isScanning,  String? error)?  $default,) {final _that = this;
 switch (_that) {
 case _BluetoothState() when $default != null:
-return $default(_that.devices,_that.connectedDevices,_that.isScanning);case _:
+return $default(_that.devices,_that.connectedDevices,_that.isScanning,_that.error);case _:
   return null;
 
 }
@@ -574,7 +575,7 @@ return $default(_that.devices,_that.connectedDevices,_that.isScanning);case _:
 
 
 class _BluetoothState with DiagnosticableTreeMixin implements BluetoothState {
-  const _BluetoothState({required final  List<DiscoveredDevice> devices, required final  List<BluetoothDevice> connectedDevices, required this.isScanning}): _devices = devices,_connectedDevices = connectedDevices;
+  const _BluetoothState({required final  List<DiscoveredDevice> devices, required final  List<BluetoothDevice> connectedDevices, required this.isScanning, required this.error}): _devices = devices,_connectedDevices = connectedDevices;
   
 
  final  List<DiscoveredDevice> _devices;
@@ -592,6 +593,7 @@ class _BluetoothState with DiagnosticableTreeMixin implements BluetoothState {
 }
 
 @override final  bool isScanning;
+@override final  String? error;
 
 /// Create a copy of BluetoothState
 /// with the given fields replaced by the non-null parameter values.
@@ -604,21 +606,21 @@ _$BluetoothStateCopyWith<_BluetoothState> get copyWith => __$BluetoothStateCopyW
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   properties
     ..add(DiagnosticsProperty('type', 'BluetoothState'))
-    ..add(DiagnosticsProperty('devices', devices))..add(DiagnosticsProperty('connectedDevices', connectedDevices))..add(DiagnosticsProperty('isScanning', isScanning));
+    ..add(DiagnosticsProperty('devices', devices))..add(DiagnosticsProperty('connectedDevices', connectedDevices))..add(DiagnosticsProperty('isScanning', isScanning))..add(DiagnosticsProperty('error', error));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _BluetoothState&&const DeepCollectionEquality().equals(other._devices, _devices)&&const DeepCollectionEquality().equals(other._connectedDevices, _connectedDevices)&&(identical(other.isScanning, isScanning) || other.isScanning == isScanning));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _BluetoothState&&const DeepCollectionEquality().equals(other._devices, _devices)&&const DeepCollectionEquality().equals(other._connectedDevices, _connectedDevices)&&(identical(other.isScanning, isScanning) || other.isScanning == isScanning)&&(identical(other.error, error) || other.error == error));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_devices),const DeepCollectionEquality().hash(_connectedDevices),isScanning);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_devices),const DeepCollectionEquality().hash(_connectedDevices),isScanning,error);
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'BluetoothState(devices: $devices, connectedDevices: $connectedDevices, isScanning: $isScanning)';
+  return 'BluetoothState(devices: $devices, connectedDevices: $connectedDevices, isScanning: $isScanning, error: $error)';
 }
 
 
@@ -629,7 +631,7 @@ abstract mixin class _$BluetoothStateCopyWith<$Res> implements $BluetoothStateCo
   factory _$BluetoothStateCopyWith(_BluetoothState value, $Res Function(_BluetoothState) _then) = __$BluetoothStateCopyWithImpl;
 @override @useResult
 $Res call({
- List<DiscoveredDevice> devices, List<BluetoothDevice> connectedDevices, bool isScanning
+ List<DiscoveredDevice> devices, List<BluetoothDevice> connectedDevices, bool isScanning, String? error
 });
 
 
@@ -646,12 +648,13 @@ class __$BluetoothStateCopyWithImpl<$Res>
 
 /// Create a copy of BluetoothState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? devices = null,Object? connectedDevices = null,Object? isScanning = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? devices = null,Object? connectedDevices = null,Object? isScanning = null,Object? error = freezed,}) {
   return _then(_BluetoothState(
 devices: null == devices ? _self._devices : devices // ignore: cast_nullable_to_non_nullable
 as List<DiscoveredDevice>,connectedDevices: null == connectedDevices ? _self._connectedDevices : connectedDevices // ignore: cast_nullable_to_non_nullable
 as List<BluetoothDevice>,isScanning: null == isScanning ? _self.isScanning : isScanning // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

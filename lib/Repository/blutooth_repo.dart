@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:blutooth/Model/device_model.dart';
 import 'package:blutooth/Services/blutooth_service.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:injectable/injectable.dart';
 
@@ -45,16 +44,24 @@ class BlutoothRepo extends MyBlutoothService {
   @override
   Future<bool> connectDevice(BluetoothDevice device) async {
     try {
+      log("Connecting to device: ${device.remoteId}");
+
       await device.connect(timeout: const Duration(seconds: 5));
 
       final isConnected = device.isConnected;
+      log("Connection status: $isConnected");
 
-      
       return isConnected;
-    } catch (e, s) {
-      if (kDebugMode) {
-        print('Connection error: $e $s');
+    } on FlutterBluePlusException catch (e) {
+      if (e.toString().contains("Timed out")) {
+        log("Connection timed out: ${device.remoteId}");
+        return false;
+      } else {
+        log("Connection error: $e");
+        return false;
       }
+    } catch (e, s) {
+      log("Unexpected connection error: $e", stackTrace: s);
       return false;
     }
   }
@@ -62,7 +69,7 @@ class BlutoothRepo extends MyBlutoothService {
   @override
   Future<bool> disconnectDevice(BluetoothDevice device) async {
     try {
-      await device.disconnect(timeout: 2);
+      await device.disconnect(timeout: 10);
 
       final isStillConnected = device.isConnected;
       return !isStillConnected;
