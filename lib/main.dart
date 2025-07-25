@@ -10,7 +10,7 @@ void main() async {
 
   await configureDependencies();
   await PermissionSerrvice().requestBluetoothPermissions();
-  
+
   runApp(const MyApp());
 }
 
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [BlocProvider(create: (context) => getIt<BluetoothBloc>())],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Flutter Bluetootth',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         ),
